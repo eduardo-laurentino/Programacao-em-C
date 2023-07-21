@@ -117,6 +117,51 @@ char stringReversa(){
     printf("\n");
 }
 
+int testeSizeof(){
+    float vteste;
+    typedef struct {
+        int day;
+        char wind[4];
+    } s_weather;
+    
+    typedef union {
+        int day;
+        char wind[4];
+    } u_weather;
+    s_weather s, *p_s, **pp_s;
+    u_weather u, *p_u, **pp_u;
+    printf("%d\n", sizeof(s));
+    printf("%d\n", sizeof(u));
+    printf("%d\n", sizeof(p_s));
+    printf("%d\n", sizeof(p_u));
+    printf("%d\n", sizeof(pp_s));
+    printf("%d\n", sizeof(pp_u));
+    printf(" --- TIPO ---|--- BYTES ---\n");
+    printf(" char .......: %d bytes\n", sizeof(char));
+    printf(" short.......: %d bytes\n", sizeof(short));
+    printf(" int.........: %d bytes\n", sizeof(int));
+    printf(" long........: %d bytes\n", sizeof(long));
+    printf(" float ......: %d bytes\n", sizeof(float));
+    printf(" double......: %d bytes\n", sizeof(double));
+    printf(" long double.: %d bytes\n\n", sizeof(long double));
+    printf("\nO tamanho de vteste e...: %d \n\n",sizeof vteste);
+}
+
+char testeStrings(){
+    char s1[80], s2[80];
+    printf("Digite a primeira String: ");
+    scanf("%s", &s1);
+    printf("Digite a segunda String: ");
+    scanf("%s", &s2);
+    printf("Comprimentos: %d %d \n", strlen(s1), strlen(s2));
+    if(!strcmp(s1, s2)){
+        printf("As strings são iguais\n");
+        strcat(s1, s2);
+        printf("%s\n", s1);
+    }
+    return 0;
+}
+
 int ePrimo(int numero)
 {
     int cont = 0;
@@ -451,5 +496,7 @@ int main(void)
     // printf("%d\n", divisao());
     // incremento();
     // ponteiro();
-    stringReversa();
+    // stringReversa();
+    // testeSizeof();
+    testeStrings();
 }
