@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include <math.h>
 
+int incremento(){
+    int z, x = 5;
+    int y = z = ++x;
+    //int y = z = x++;
+    x++;
+    printf("valor de y = %d\n", y);
+    printf("valor de z = %d\n", z);
+    printf("valor de x = %d\n", x);
+    return 0;
+}
+
 int forSemIncremento()
 {
     // enquanto for digitado um valor diferente de 123 for será executado
@@ -82,6 +93,28 @@ int hora()
         printf("Os segundos convertidos em horas é: %d:%d:%d:\n", hra, mnt, sgnd);
     }
     return 0;
+}
+
+float ponteiro(){
+    float x = 20.5;
+    float *p;
+    float **q;
+    p = &x;
+    q = &p;
+    //y = *p;
+    printf("%.2f\n", **q);
+    return 0;
+}
+
+char stringReversa(){
+    char s[100];
+    printf("Digite uma frase: ");
+    scanf("%s", s);
+    register int t;
+    for(t = strlen(s)-1; t >= 0; t--){
+        putchar(s[t]);
+    }
+    printf("\n");
 }
 
 int ePrimo(int numero)
@@ -415,5 +448,8 @@ int main(void)
     // pertenceFibonacci();
     // printf("%d\n", modulo());
     // printf("%d\n", potencia());
-    printf("%d\n", divisao());
+    // printf("%d\n", divisao());
+    // incremento();
+    // ponteiro();
+    stringReversa();
 }

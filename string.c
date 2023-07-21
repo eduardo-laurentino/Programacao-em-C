@@ -4,8 +4,8 @@
 
 int main(void){
     char s1[80], s2[80];
-    gets(s1);
-    gets(s2);
+    scanf("%s", s1);
+    scanf("%s", s2);
     printf("Comprimentos: %s %s \n", strlen(s1), strlen(s2));
     if(!strcmp(s1, s2)){
         printf("As strings são iguais\n");
