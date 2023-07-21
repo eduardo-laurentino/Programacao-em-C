@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
+#include <string.h>
 
 int main(void){
     char s1[80], s2[80];
     gets(s1);
     gets(s2);
-    printf("Comprimentos: %d %d \n", strlen(s1), strlen(s2));
+    printf("Comprimentos: %s %s \n", strlen(s1), strlen(s2));
     if(!strcmp(s1, s2)){
         printf("As strings são iguais\n");
         strcat(s1, s2);

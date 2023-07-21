@@ -21,8 +21,8 @@ void iniciar_lista(void){
 char menu (void){
     char s[80];
     int c;
-    printf("1. Inserir um nomen");
-    printf("2. Excluir u nome");
+    printf("1. Inserir um nome");
+    printf("2. Excluir um nome");
     printf("3. Listar o aquivo");
     printf("4. Sair\n");
     do{

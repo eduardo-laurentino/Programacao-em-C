@@ -7,7 +7,7 @@ typedef union {
 int day;
 char wind[4];
 } u_weather;
-int main(int argc, char const *argv[]) {
+int main() {
 s_weather s, *p_s, **pp_s;
 u_weather u, *p_u, **pp_u;
 printf("%d\n", sizeof(s));
