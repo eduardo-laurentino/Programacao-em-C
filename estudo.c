@@ -476,6 +476,17 @@ void pertenceFibonacci()
     }
 }
 
+int sequenciaCatalan(){
+    int numero;
+    printf("Digite um número: ");
+    scanf("%d", &numero);
+    if (numero == 0){
+        return 1;
+    }else{
+        return (fat(2*numero)/((fat(numero+1))*(fat(numero))));
+    }
+}
+
 int main(void)
 {
     // fibonacci();
@@ -498,5 +509,6 @@ int main(void)
     // ponteiro();
     // stringReversa();
     // testeSizeof();
-    testeStrings();
+    //testeStrings();
+    printf("%d\n", sequenciaCatalan());
 }
