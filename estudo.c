@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 int incremento(){
     int z, x = 5;
@@ -145,6 +146,7 @@ int testeSizeof(){
     printf(" double......: %d bytes\n", sizeof(double));
     printf(" long double.: %d bytes\n\n", sizeof(long double));
     printf("\nO tamanho de vteste e...: %d \n\n",sizeof vteste);
+    return 0;
 }
 
 char testeStrings(){
@@ -476,16 +478,118 @@ void pertenceFibonacci()
     }
 }
 
-int sequenciaCatalan(){
-    int numero;
+
+void numeroPerfeito(){
+    int num;
+    int aux = 0;
     printf("Digite um número: ");
-    scanf("%d", &numero);
-    if (numero == 0){
-        return 1;
-    }else{
-        return (fat(2*numero)/((fat(numero+1))*(fat(numero))));
+    scanf("%d", & num);
+
+    for(int i = 1; i < num -1; i++){
+        if(num % i == 0){
+            aux += i;
+            printf("%d %d\n", num, aux);
+        }
     }
+    if(aux == num){
+        printf("%d É um número perfeito!", num);
+    }else{
+        printf("%d Não é um número perfeito!", num);
+        }
 }
+
+int lerArquivo(){
+    FILE *fp;
+    char ch;
+    fp = fopen ("teste.txt", "r");
+    ch = getc(fp);
+    while (ch != EOF){
+        putchar(ch);
+        ch = getc(fp);
+    }
+    printf("\n");
+    fclose(fp);
+    return 0;
+}
+
+int funcaoFputs(){
+    FILE *fp = fopen("arquivo.txt", "w");
+    if (fp != NULL) {
+        fputs("Hello, World!", fp);
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+int funcaoFgets(){
+    FILE *fp = fopen("arquivo.txt", "r");
+    if (fp != NULL) {
+        char linha[100];
+        while (fgets(linha, sizeof(linha), fp) != NULL) {
+            printf("%s", linha);
+        }
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+int funcaoStrcat(){
+    char destino[50] = "Hello, ";
+    const char *origem = "World!";
+
+    strcat(destino, origem);
+
+    printf("String concatenada: %s\n", destino);
+
+    return 0;
+}
+
+int funcaoStrncat(){
+    char destino[20] = "Hello, ";
+    char origem[] = "World!";
+    
+    strncat(destino, origem, 4);  // Anexa apenas os primeiros 4 caracteres de 'origem'
+
+    printf("Resultado: %s\n", destino);
+
+    return 0;
+
+}
+
+int funcaoRewind(){
+    FILE *fp = fopen("arquivo.txt", "r");
+    if (fp != NULL) {
+        char linha[100];
+
+        // Lê e imprime as primeiras duas linhas do arquivo
+        fgets(linha, sizeof(linha), fp);
+        printf("Linha 1: %s", linha);
+
+        fgets(linha, sizeof(linha), fp);
+        printf("Linha 2: %s", linha);
+
+        // Reposiciona o indicador de posição para o início do arquivo
+        rewind(fp);
+
+        // Lê e imprime a primeira linha novamente
+        fgets(linha, sizeof(linha), fp);
+        printf("Linha 1 (repetida): %s", linha);
+
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+funcaoFerror(){}
 
 int main(void)
 {
@@ -509,6 +613,13 @@ int main(void)
     // ponteiro();
     // stringReversa();
     // testeSizeof();
-    //testeStrings();
-    printf("%d\n", sequenciaCatalan());
+    // testeStrings();
+    // printf("%d\n", sequenciaCatalan());
+    // numeroPerfeito();
+    //lerArquivo();
+    //funcaoFputs();
+    //funcaoFgets();
+    //funcaoStrcat();
+    //funcaoStrncat();
+    funcaoRewind();
 }
