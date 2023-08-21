@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <errno.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 int incremento(){
     int z, x = 5;
@@ -116,6 +122,7 @@ char stringReversa(){
         putchar(s[t]);
     }
     printf("\n");
+return 0;
 }
 
 int testeSizeof(){
@@ -131,31 +138,31 @@ int testeSizeof(){
     } u_weather;
     s_weather s, *p_s, **pp_s;
     u_weather u, *p_u, **pp_u;
-    printf("%d\n", sizeof(s));
-    printf("%d\n", sizeof(u));
-    printf("%d\n", sizeof(p_s));
-    printf("%d\n", sizeof(p_u));
-    printf("%d\n", sizeof(pp_s));
-    printf("%d\n", sizeof(pp_u));
+    printf("%ld\n", sizeof(s));
+    printf("%ld\n", sizeof(u));
+    printf("%ld\n", sizeof(p_s));
+    printf("%ld\n", sizeof(p_u));
+    printf("%ld\n", sizeof(pp_s));
+    printf("%ld\n", sizeof(pp_u));
     printf(" --- TIPO ---|--- BYTES ---\n");
-    printf(" char .......: %d bytes\n", sizeof(char));
-    printf(" short.......: %d bytes\n", sizeof(short));
-    printf(" int.........: %d bytes\n", sizeof(int));
-    printf(" long........: %d bytes\n", sizeof(long));
-    printf(" float ......: %d bytes\n", sizeof(float));
-    printf(" double......: %d bytes\n", sizeof(double));
-    printf(" long double.: %d bytes\n\n", sizeof(long double));
-    printf("\nO tamanho de vteste e...: %d \n\n",sizeof vteste);
+    printf(" char .......: %ld bytes\n", sizeof(char));
+    printf(" short.......: %ld bytes\n", sizeof(short));
+    printf(" int.........: %ld bytes\n", sizeof(int));
+    printf(" long........: %ld bytes\n", sizeof(long));
+    printf(" float ......: %ld bytes\n", sizeof(float));
+    printf(" double......: %ld bytes\n", sizeof(double));
+    printf(" long double.: %ld bytes\n\n", sizeof(long double));
+    printf("\nO tamanho de vteste e...: %ld \n\n",sizeof vteste);
     return 0;
 }
 
 char testeStrings(){
     char s1[80], s2[80];
     printf("Digite a primeira String: ");
-    scanf("%s", &s1);
+    scanf("%s", s1);
     printf("Digite a segunda String: ");
-    scanf("%s", &s2);
-    printf("Comprimentos: %d %d \n", strlen(s1), strlen(s2));
+    scanf("%s", s2);
+    printf("Comprimentos: %ld %ld \n", strlen(s1), strlen(s2));
     if(!strcmp(s1, s2)){
         printf("As strings são iguais\n");
         strcat(s1, s2);
@@ -524,7 +531,7 @@ int funcaoFputs(){
     return 0;
 }
 
-int funcaoFgets(){
+int funcaoFgets1(){
     FILE *fp = fopen("arquivo.txt", "r");
     if (fp != NULL) {
         char linha[100];
@@ -589,7 +596,239 @@ int funcaoRewind(){
     return 0;
 }
 
-funcaoFerror(){}
+int funcaoFerror(){
+     FILE *fp = fopen("arquivo_inexistente.txt", "r");
+    if (fp != NULL) {
+        // Operações de leitura ou escrita no arquivo
+        // ...
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+
+        if (ferror(fp)) {
+            printf("Erro durante operações de I/O no arquivo.\n");
+        }
+    }
+
+    return 0;
+}
+
+int armazenaErro(){
+    //Uma variável global errno é usada para acessar o código de erro associado à última operação que falhou
+
+    FILE *fp = fopen("arquivo_inexistente.txt", "r");
+    if (fp == NULL) {
+        perror("Erro ao abrir o arquivo");
+        printf("Número do erro: %d\n", errno);
+    } else {
+        // Operações de leitura ou escrita no arquivo
+        // ...
+        fclose(fp);
+    }
+
+    return 0;
+}
+
+int funcaoFflush(){
+    FILE *fp = fopen("arquivo.txt", "w");
+    if (fp != NULL) {
+        fputs("Hello, World!", fp);
+
+        if (fflush(fp) == 0) {
+            printf("Dados gravados com sucesso.\n");
+        } else {
+            perror("Erro ao gravar os dados");
+        }
+
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+int funcaoFgets(){
+     char buffer[100];  // Buffer para armazenar a linha de texto
+    printf("Digite uma linha de texto: ");
+    
+    // Lê uma linha de texto da entrada padrão (teclado)
+    fgets(buffer, sizeof(buffer), stdin);
+    
+    printf("Você digitou: %s", buffer);
+    
+    return 0;
+}
+
+int funcaoFread(){
+    FILE *fp = fopen("arquivo", "rb");
+    if (fp != NULL) {
+        int numeros[5];
+
+        size_t elementos_lidos = fread(numeros, sizeof(int), 5, fp);
+
+        if (elementos_lidos == 5) {
+            for (int i = 0; i < 5; i++) {
+                printf("Número %d: %d\n", i + 1, numeros[i]);
+            }
+        } else {
+            printf("Erro na leitura dos dados.\n");
+        }
+
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+int funcaoFwrite(){
+    FILE *fp = fopen("arquivo.", "wb");
+    if (fp != NULL) {
+        int numeros[5] = {10, 20, 30, 40, 50};
+
+        size_t elementos_escritos = fwrite(numeros, sizeof(int), 5, fp);
+
+        if (elementos_escritos == 5) {
+            printf("Dados escritos com sucesso.\n");
+        } else {
+            printf("Erro na escrita dos dados.\n");
+        }
+
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+int funcaoFprintf(){
+    FILE *fp = fopen("saida.txt", "w");
+    if (fp != NULL) {
+        int idade = 25;
+        double altura = 1.75;
+
+        fprintf(fp, "Idade: %d anos\nAltura: %.2f metros\n", idade, altura);
+
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+int funcaoFscanf(){
+     FILE *fp = fopen("saida.txt", "r");
+    if (fp != NULL) {
+        int idade;
+        double altura;
+
+        fscanf(fp, "Idade: %d anos\nAltura: %lf metros", &idade, &altura);
+
+        printf("Idade: %d anos\nAltura: %.2f metros\n", idade, altura);
+
+        fclose(fp);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+int funcaoPutchar(){
+    putchar('H');
+    putchar('e');
+    putchar('l');
+    putchar('l');
+    putchar('o');
+    putchar(',');
+
+    putchar(' ');
+
+    putchar('W');
+    putchar('o');
+    putchar('r');
+    putchar('l');
+    putchar('d');
+    putchar('!');
+
+    putchar('\n');
+
+    return 0;
+}
+
+int funcaoFreopen(){
+    FILE *original_stdout = stdout;  // Salva o ponteiro do stdout original
+
+    FILE *new_file = fopen("saida.txt", "w");
+    if (new_file != NULL) {
+        stdout = new_file;  // Redireciona o stdout para o novo arquivo
+
+        printf("Isso será escrito no arquivo.\n");
+
+        // Restaura o stdout original
+        stdout = original_stdout;
+
+        printf("Isso será impresso no console.\n");
+
+        fclose(new_file);
+    } else {
+        printf("Erro ao abrir o arquivo.\n");
+    }
+
+    return 0;
+}
+
+int funcaoRemove(){
+    const char *filename = "arquivo.";
+    
+    if (remove(filename) == 0) {
+        printf("Arquivo removido com sucesso.\n");
+    } else {
+        perror("Erro ao remover o arquivo");
+    }
+
+    return 0;
+}
+
+int funcaoFseek(){
+    FILE *fp = fopen("saida.txt", "r");
+    if (fp == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+    
+    fseek(fp, 10, SEEK_SET);  // Move o indicador de posição para a 10ª posição a partir do início
+    
+    char c;
+    while ((c = fgetc(fp)) != EOF) {
+        putchar(c);  // Imprime o caractere lido na saída padrão
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+int funcaoFgetc(){
+    FILE *file = fopen("saida.txt", "r");
+
+    if (file != NULL) {
+        int ch;
+
+        while ((ch = fgetc(file)) != EOF) {
+            printf("%c", ch);
+        }
+
+        fclose(file);
+    } else {
+        perror("Erro ao abrir o arquivo");
+    }
+
+    return 0;
+}
 
 int main(void)
 {
@@ -616,10 +855,24 @@ int main(void)
     // testeStrings();
     // printf("%d\n", sequenciaCatalan());
     // numeroPerfeito();
-    //lerArquivo();
-    //funcaoFputs();
-    //funcaoFgets();
-    //funcaoStrcat();
-    //funcaoStrncat();
-    funcaoRewind();
+    // lerArquivo();
+    // funcaoFputs();
+    // funcaoFgets1();
+    // funcaoStrcat();
+    // funcaoStrncat();
+    // funcaoRewind();
+    // funcaoFerror();
+    // armazenaErro();
+    // funcaoFflush();
+    // funcaoFread();
+    // funcaoFwrite();
+    // funcaoFprintf();
+    // funcaoFscanf();
+    // funcaoPutchar();
+    // funcaoFreopen();
+    // funcaoOpen();
+    // funcaoFgets();
+    // funcaoRemove();
+    // funcaoFseek();
+    funcaoFgetc();
 }
