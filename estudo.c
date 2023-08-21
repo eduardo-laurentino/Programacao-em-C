@@ -830,6 +830,16 @@ int funcaoFgetc(){
     return 0;
 }
 
+int macro(){
+    #define SQUARE(x) ((x) * (x))
+    int num = 5;
+    int result = SQUARE(num);  // Isso será substituído por ((num) * (num))
+
+    printf("O quadrado de %d é %d\n", num, result);
+
+    return 0;
+}
+
 int main(void)
 {
     // fibonacci();
@@ -874,5 +884,6 @@ int main(void)
     // funcaoFgets();
     // funcaoRemove();
     // funcaoFseek();
-    funcaoFgetc();
+    // funcaoFgetc();
+    macro();
 }
