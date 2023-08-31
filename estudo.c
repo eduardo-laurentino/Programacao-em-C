@@ -924,6 +924,41 @@ int funcaoFeof(){
     return 0;
 }
 
+int funcaoFgetpos(){
+    FILE *file = fopen("exemplo.txt", "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    fpos_t position;
+    if (fgetpos(file, &position) != 0) {
+        perror("Erro ao obter a posição");
+        fclose(file);
+        return 1;
+    }
+
+    // Realiza operações de leitura...
+
+    // Voltar à posição original usando fsetpos() com 'position'
+
+    fclose(file);
+    return 0;
+}
+
+int funcaoFopen(){
+    FILE *file = fopen("exemplo.txt", "w");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    fprintf(file, "Hello, World!\n");
+    
+    fclose(file);
+    return 0;
+}
+
 int main(void)
 {
     // fibonacci();
@@ -973,5 +1008,7 @@ int main(void)
     //funcaoCleaerr();
     //funcaoClose();
     //funcaoFclose();
-    funcaoFeof();
+    //funcaoFeof();
+    //funcaoFgetpos();
+    funcaoFopen();
 }
