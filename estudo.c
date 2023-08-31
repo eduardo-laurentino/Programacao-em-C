@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include <errno.h>
+#include <ctype.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -840,6 +841,89 @@ int macro(){
     return 0;
 }
 
+int funcaoCleaerr(){
+    // Abre o arquivo "exemplo.txt" para leitura
+    FILE *file = fopen("exemplo.txt", "r");
+    
+    // Verifica se o arquivo foi aberto com sucesso
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1; // Encerra o programa com um código de erro
+    }
+
+    // Realiza operações de leitura no arquivo...
+    
+    // Após as operações, limpa indicadores de erro/fim de arquivo
+    clearerr(file);
+
+    // Continua com operações de leitura (sem ser afetado por indicadores anteriores)...
+
+    // Fecha o arquivo
+    fclose(file);
+    
+    return 0; // Encerra o programa indicando que tudo ocorreu bem
+
+}
+
+int funcaoClose(){
+    FILE *file = fopen("exemplo.txt", "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    // Realiza operações de leitura...
+
+    // Fecha o arquivo usando a função close()
+    int result = close(fileno(file));
+    if (result == -1) {
+        perror("Erro ao fechar o arquivo");
+        return 1;
+    }
+
+    return 0;
+}
+
+int funcaoFclose(){
+    FILE *file = fopen("exemplo.txt", "w");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    fprintf(file, "Olá, mundo!\n");
+    
+    if (fclose(file) == 0) {
+        printf("Arquivo fechado com sucesso.\n");
+    } else {
+        perror("Erro ao fechar o arquivo");
+    }
+
+    return 0;
+}
+
+int funcaoFeof(){
+    FILE *file = fopen("exemplo.txt", "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    int ch;
+    while ((ch = fgetc(file)) != EOF) {
+        putchar(ch); // Imprime o caractere lido
+    }
+
+    if (feof(file)) {
+        printf("\nChegou ao final do arquivo.\n");
+    } else {
+        printf("\nOcorreu um erro ou operações ainda podem ser feitas.\n");
+    }
+
+    fclose(file);
+    return 0;
+}
+
 int main(void)
 {
     // fibonacci();
@@ -885,5 +969,9 @@ int main(void)
     // funcaoRemove();
     // funcaoFseek();
     // funcaoFgetc();
-    macro();
+    //macro();
+    //funcaoCleaerr();
+    //funcaoClose();
+    //funcaoFclose();
+    funcaoFeof();
 }
