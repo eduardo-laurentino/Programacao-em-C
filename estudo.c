@@ -4,6 +4,7 @@
 #include <string.h>
 #include <errno.h>
 #include <ctype.h>
+#include <ncurses.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -884,6 +885,7 @@ int funcaoClose(){
     return 0;
 }
 
+
 int funcaoFclose(){
     FILE *file = fopen("exemplo.txt", "w");
     if (file == NULL) {
@@ -959,6 +961,197 @@ int funcaoFopen(){
     return 0;
 }
 
+int funcaoFputc(){
+    FILE *file = fopen("exemplo.txt", "w");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    int caractere = 'A'; // O código ASCII de 'A' é 65
+
+    if (fputc(caractere, file) == EOF) {
+        perror("Erro ao escrever o caractere");
+        fclose(file);
+        return 1;
+    }
+
+    fclose(file);
+    return 0;
+}
+
+int funcaoFsetpos(){
+    FILE *file = fopen("exemplo.txt", "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    fpos_t position;
+    if (fgetpos(file, &position) != 0) {
+        perror("Erro ao obter a posição");
+        fclose(file);
+        return 1;
+    }
+
+    // Realiza operações de leitura...
+
+    // Volta à posição original usando fsetpos()
+    if (fsetpos(file, &position) != 0) {
+        perror("Erro ao voltar à posição original");
+        fclose(file);
+        return 1;
+    }
+
+    // Continua operações de leitura a partir da posição original...
+
+    fclose(file);
+    return 0;
+}
+
+int funcaoFtell(){
+    FILE *file = fopen("exemplo.txt", "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    // Realiza operações de leitura...
+
+    // Obtém a posição atual
+    long int posicao = ftell(file);
+    if (posicao == -1L) {
+        perror("Erro ao obter a posição");
+        fclose(file);
+        return 1;
+    }
+
+    printf("A posição atual no arquivo é: %ld\n", posicao);
+
+    fclose(file);
+    return 0;
+}
+
+int funcaoGetc(){
+    FILE *file = fopen("exemplo.txt", "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    int caractere;
+
+    // Lê e imprime cada caractere no arquivo
+    while ((caractere = getc(file)) != EOF) {
+        putchar(caractere);
+    }
+
+    fclose(file);
+    return 0;
+}
+
+int funcaoGetchar(){
+    char tecla;
+
+    printf("Pressione uma tecla: ");
+    tecla = getchar(); // Lê um caractere do teclado sem precisar pressionar Enter
+
+    printf("\nVocê pressionou a tecla: %c\n", tecla);
+
+    return 0;
+}
+
+int funcaoPerror(){
+    FILE *file = fopen("nao_existe.txt", "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        exit(EXIT_FAILURE);
+    }
+
+    // Resto do código...
+
+    fclose(file);
+    return 0;
+}
+
+int funcaoPutc(){
+    FILE *file = fopen("exemplo.txt", "w");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    int caractere = 'A'; // O caractere que queremos escrever
+
+    // Escreve o caractere no arquivo usando putc()
+    int resultado = putc(caractere, file);
+    if (resultado == EOF) {
+        perror("Erro ao escrever no arquivo");
+        fclose(file);
+        return 1;
+    }
+
+    fclose(file);
+    return 0;
+}
+
+int funcaoRename(){
+    const char *nome_antigo = "arquivo_antigo.txt";
+    const char *nome_novo = "arquivo_novo.txt";
+
+    if (rename(nome_antigo, nome_novo) == 0) {
+        printf("Arquivo renomeado com sucesso.\n");
+    } else {
+        perror("Erro ao renomear o arquivo");
+    }
+
+    return 0;
+}
+
+int funcaoSprintf(){
+    char buffer[100];
+    int numero = 42;
+    float valor = 3.14;
+
+    // Formatar uma string e armazená-la em buffer
+    int caracteres_escritos = sprintf(buffer, "O número é %d e o valor é %.2f", numero, valor);
+
+    // Imprimir a string resultante
+    printf("String formatada: %s\n", buffer);
+    printf("Número de caracteres escritos: %d\n", caracteres_escritos);
+
+    return 0;
+}
+
+int funcaoSscanf(){
+    const char *texto = "O número é 42 e o valor é 3.14";
+    int numero;
+    float valor;
+
+    // Ler dados da string usando sscanf()
+    int num_lidos = sscanf(texto, "O número é %d e o valor é %f", &numero, &valor);
+
+    // Imprimir os valores lidos
+    printf("Número: %d\n", numero);
+    printf("Valor: %.2f\n", valor);
+    printf("Número de valores lidos: %d\n", num_lidos);
+
+    return 0;
+}
+
+int funcaoUnlink(){
+     const char *nome_arquivo = "exemplo.txt";
+
+    // Tentar excluir o arquivo
+    if (unlink(nome_arquivo) == 0) {
+        printf("Arquivo %s excluído com sucesso.\n", nome_arquivo);
+    } else {
+        perror("Erro ao excluir o arquivo");
+    }
+
+    return 0;
+}
+
 int main(void)
 {
     // fibonacci();
@@ -1010,5 +1203,16 @@ int main(void)
     //funcaoFclose();
     //funcaoFeof();
     //funcaoFgetpos();
-    funcaoFopen();
+    //funcaoFopen();
+    //funcaoFputc();
+    //funcaoFsetpos();
+    //funcaoFtell();
+    //funcaoGetc();
+    //funcaoGetchar();
+    //funcaoPerror();
+    //funcaoPutc();
+    //funcaoRename();
+    //funcaoSprintf();
+    //funcaoSscanf();
+    funcaoUnlink();
 }
