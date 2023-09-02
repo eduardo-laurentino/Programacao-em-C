@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <ctype.h>
 #include <ncurses.h>
+#include <locale.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -487,6 +488,25 @@ void pertenceFibonacci()
     }
 }
 
+int testandoStruct(){
+    struct Ponto2D {
+    float x;
+    float y;
+};
+
+// Criando uma instância da struct Ponto2D
+    struct Ponto2D ponto1;
+
+    // Inicializando os membros da struct
+    ponto1.x = 3.0;
+    ponto1.y = 4.0;
+
+    // Acessando os membros da struct
+    printf("Coordenada x: %f\n", ponto1.x);
+    printf("Coordenada y: %f\n", ponto1.y);
+
+    return 0;
+}
 
 void numeroPerfeito(){
     int num;
@@ -1152,51 +1172,461 @@ int funcaoUnlink(){
     return 0;
 }
 
+
+int funcaoIsalnum(){
+    char c1 = 'A';
+    char c2 = '7';
+    char c3 = '@';
+
+    if (isalnum(c1)) {
+        printf("%c é alfanumérico.\n", c1);
+    } else {
+        printf("%c não é alfanumérico.\n", c1);
+    }
+
+    if (isalnum(c2)) {
+        printf("%c é alfanumérico.\n", c2);
+    } else {
+        printf("%c não é alfanumérico.\n", c2);
+    }
+
+    if (isalnum(c3)) {
+        printf("%c é alfanumérico.\n", c3);
+    } else {
+        printf("%c não é alfanumérico.\n", c3);
+    }
+
+    return 0;
+}
+
+int funcaoIsalpha(){
+    char c1 = 'A';
+    char c2 = '7';
+    char c3 = '@';
+
+    if (isalpha(c1)) {
+        printf("%c é uma letra do alfabeto.\n", c1);
+    } else {
+        printf("%c não é uma letra do alfabeto.\n", c1);
+    }
+
+    if (isalpha(c2)) {
+        printf("%c é uma letra do alfabeto.\n", c2);
+    } else {
+        printf("%c não é uma letra do alfabeto.\n", c2);
+    }
+
+    if (isalpha(c3)) {
+        printf("%c é uma letra do alfabeto.\n", c3);
+    } else {
+        printf("%c não é uma letra do alfabeto.\n", c3);
+    }
+
+    return 0;
+}
+
+int funcaoIscntrl(){
+    char c1 = '\n';  // Caractere de nova linha
+    char c2 = 'A';   // Uma letra maiúscula
+    char c3 = '\t';  // Caractere de tabulação
+
+    if (iscntrl(c1)) {
+        printf("%c é um caractere de controle.\n", c1);
+    } else {
+        printf("%c não é um caractere de controle.\n", c1);
+    }
+
+    if (iscntrl(c2)) {
+        printf("%c é um caractere de controle.\n", c2);
+    } else {
+        printf("%c não é um caractere de controle.\n", c2);
+    }
+
+    if (iscntrl(c3)) {
+        printf("%c é um caractere de controle.\n", c3);
+    } else {
+        printf("%c não é um caractere de controle.\n", c3);
+    }
+
+    return 0;
+}
+
+int funcaoIsgraph(){
+    char c1 = 'A';      // Uma letra maiúscula
+    char c2 = ' ';      // Espaço em branco
+    char c3 = '!';      // Um caractere especial
+
+    if (isgraph(c1)) {
+        printf("%c é um caractere imprimível e não é espaço em branco.\n", c1);
+    } else {
+        printf("%c não é um caractere imprimível e não é espaço em branco.\n", c1);
+    }
+
+    if (isgraph(c2)) {
+        printf("%c é um caractere imprimível e não é espaço em branco.\n", c2);
+    } else {
+        printf("%c não é um caractere imprimível e não é espaço em branco.\n", c2);
+    }
+
+    if (isgraph(c3)) {
+        printf("%c é um caractere imprimível e não é espaço em branco.\n", c3);
+    } else {
+        printf("%c não é um caractere imprimível e não é espaço em branco.\n", c3);
+    }
+
+    return 0;
+}
+
+int funcaoIslower(){
+     char c1 = 'a';      // Uma letra minúscula
+    char c2 = 'A';      // Uma letra maiúscula
+
+    if (islower(c1)) {
+        printf("%c é uma letra minúscula.\n", c1);
+    } else {
+        printf("%c não é uma letra minúscula.\n", c1);
+    }
+
+    if (islower(c2)) {
+        printf("%c é uma letra minúscula.\n", c2);
+    } else {
+        printf("%c não é uma letra minúscula.\n", c2);
+    }
+
+    return 0;
+}
+
+int funcaoIsprint(){
+    char c1 = 'A';      // Uma letra maiúscula
+    char c2 = ' ';      // Espaço em branco
+    char c3 = '!';      // Um caractere especial
+
+    if (isprint(c1)) {
+        printf("%c é um caractere imprimível.\n", c1);
+    } else {
+        printf("%c não é um caractere imprimível.\n", c1);
+    }
+
+    if (isprint(c2)) {
+        printf("%c é um caractere imprimível.\n", c2);
+    } else {
+        printf("%c não é um caractere imprimível.\n", c2);
+    }
+
+    if (isprint(c3)) {
+        printf("%c é um caractere imprimível.\n", c3);
+    } else {
+        printf("%c não é um caractere imprimível.\n", c3);
+    }
+
+    return 0;
+}
+
+int funcaoIspunct(){
+    char c1 = ',';      // Uma vírgula
+    char c2 = 'A';      // Uma letra maiúscula
+    char c3 = '!';      // Um ponto de exclamação
+
+    if (ispunct(c1)) {
+        printf("%c é um caractere de pontuação.\n", c1);
+    } else {
+        printf("%c não é um caractere de pontuação.\n", c1);
+    }
+
+    if (ispunct(c2)) {
+        printf("%c é um caractere de pontuação.\n", c2);
+    } else {
+        printf("%c não é um caractere de pontuação.\n", c2);
+    }
+
+    if (ispunct(c3)) {
+        printf("%c é um caractere de pontuação.\n", c3);
+    } else {
+        printf("%c não é um caractere de pontuação.\n", c3);
+    }
+
+    return 0;
+}
+
+int funcaoIsspace(){
+    char c1 = ' ';      // Espaço em branco
+    char c2 = '\t';     // Caractere de tabulação
+    char c3 = 'A';      // Uma letra maiúscula
+
+    if (isspace(c1)) {
+        printf("%c é um caractere de espaço em branco.\n", c1);
+    } else {
+        printf("%c não é um caractere de espaço em branco.\n", c1);
+    }
+
+    if (isspace(c2)) {
+        printf("%c é um caractere de espaço em branco.\n", c2);
+    } else {
+        printf("%c não é um caractere de espaço em branco.\n", c2);
+    }
+
+    if (isspace(c3)) {
+        printf("%c é um caractere de espaço em branco.\n", c3);
+    } else {
+        printf("%c não é um caractere de espaço em branco.\n", c3);
+    }
+
+    return 0;
+}
+
+int funcaoIsupper(){
+     char c1 = 'A';      // Uma letra maiúscula
+    char c2 = 'a';      // Uma letra minúscula
+
+    if (isupper(c1)) {
+        printf("%c é uma letra maiúscula.\n", c1);
+    } else {
+        printf("%c não é uma letra maiúscula.\n", c1);
+    }
+
+    if (isupper(c2)) {
+        printf("%c é uma letra maiúscula.\n", c2);
+    } else {
+        printf("%c não é uma letra maiúscula.\n", c2);
+    }
+
+    return 0;
+}
+
+int funcaoIsxdigit(){
+    char c1 = '1';      // Um dígito hexadecimal válido
+    char c2 = 'G';      // Um caractere que não é um dígito hexadecimal
+    char c3 = 'A';      // Um dígito hexadecimal válido
+
+    if (isxdigit(c1)) {
+        printf("%c é um dígito hexadecimal válido.\n", c1);
+    } else {
+        printf("%c não é um dígito hexadecimal válido.\n", c1);
+    }
+
+    if (isxdigit(c2)) {
+        printf("%c é um dígito hexadecimal válido.\n", c2);
+    } else {
+        printf("%c não é um dígito hexadecimal válido.\n", c2);
+    }
+
+    if (isxdigit(c3)) {
+        printf("%c é um dígito hexadecimal válido.\n", c3);
+    } else {
+        printf("%c não é um dígito hexadecimal válido.\n", c3);
+    }
+
+    return 0;
+}
+
+int funcaoMemchr(){
+    char buffer[] = "Hello, World!";
+    char *resultado = (char *)memchr(buffer, 'W', strlen(buffer));
+
+    if (resultado != NULL) {
+        printf("Encontrado: %c\n", *resultado);
+    } else {
+        printf("Não encontrado.\n");
+    }
+
+    return 0;
+}
+
+int funcaoMemcmp(){
+    char str1[] = "Hello";
+    char str2[] = "World";
+
+    int resultado = memcmp(str1, str2, 5);  // Compara os primeiros 5 bytes
+
+    if (resultado == 0) {
+        printf("As strings são iguais.\n");
+    } else if (resultado < 0) {
+        printf("str1 é menor do que str2.\n");
+    } else {
+        printf("str1 é maior do que str2.\n");
+    }
+
+    return 0;
+}
+
+int funcaoMemcpy(){
+    char origem[] = "Hello, World!";
+    char destino[20];  // Buffer de destino
+
+    // Copia os primeiros 13 bytes de origem para destino
+    memcpy(destino, origem, 13);
+
+    // Adiciona um terminador nulo para criar uma string válida
+    destino[13] = '\0';
+
+    printf("String copiada: %s\n", destino);
+
+    return 0;
+}
+
+int funcaoMemmove(){
+    char buffer[] = "Hello, World!";
+    
+    // Move a palavra "Hello" 6 posições à direita
+    memmove(buffer + 6, buffer, 5);
+    
+    printf("String modificada: %s\n", buffer);
+
+    return 0;
+}
+
+int funcaoMemset(){
+    char buffer[10];  // Um buffer de 10 bytes
+    
+    // Inicializa o buffer com zeros
+    memset(buffer, 0, sizeof(buffer));
+
+    // Imprime o conteúdo do buffer
+    for (int i = 0; i < sizeof(buffer); i++) {
+        printf("buffer[%d] = %d\n", i, buffer[i]);
+    }
+
+    return 0;
+}
+
+int funcaoStrcoll(){
+    setlocale(LC_ALL, "pt_BR");  // Define a localização para o português do Brasil
+
+    const char *str1 = "maçã";
+    const char *str2 = "banana";
+
+    int resultado = strcoll(str1, str2);
+
+    if (resultado < 0) {
+        printf("%s vem antes de %s na ordenação local.\n", str1, str2);
+    } else if (resultado > 0) {
+        printf("%s vem depois de %s na ordenação local.\n", str1, str2);
+    } else {
+        printf("%s e %s são equivalentes na ordenação local.\n", str1, str2);
+    }
+
+    return 0;
+
+}
+
+int funcaoStrcpy(){
+    char destino[20];  // String de destino
+    const char *origem = "Hello, World!";  // String de origem
+
+    // Copia a string de origem para a string de destino
+    strcpy(destino, origem);
+
+    printf("String copiada: %s\n", destino);
+
+    return 0;
+}
+
+int funcaoStrcspn(){
+    const char *str = "Hello, World!";
+    const char *conjunto = " ,";  // Espaço e vírgula como caracteres no conjunto
+
+    size_t tamanho = strcspn(str, conjunto);
+
+    printf("Comprimento da porção inicial sem caracteres do conjunto: %zu\n", tamanho);
+
+    return 0;
+}
+
+int funcaoStrspn(){
+    const char *str = "12345abcde";
+    const char *conjunto = "0123456789";  // Conjunto de dígitos
+
+    size_t comprimento = strspn(str, conjunto);
+
+    printf("Comprimento da porção inicial de dígitos: %zu\n", comprimento);
+
+    return 0;
+}
+
+int funcaoStrtok(){
+     char str[] = "Hello World How Are You";
+    const char *delimitadores = " ";  // Espaço em branco como delimitador
+
+    // Primeira chamada para strtok: passa a string original
+    char *token = strtok(str, delimitadores);
+
+    // Continua a dividir a string e imprimir os tokens
+    while (token != NULL) {
+        printf("Token: %s\n", token);
+
+        // Próxima chamada para strtok: passa NULL para continuar
+        token = strtok(NULL, delimitadores);
+    }
+
+    return 0;
+}
+
+int funcaoTolower(){
+    int caractere = 'H';  // O caractere 'H' maiúsculo
+
+    int convertido = tolower(caractere);
+
+    printf("Caractere convertido para minúsculas: %c\n", convertido);
+
+    return 0;
+}
+
+int funcaoToupper(){
+    int caractere = 'h';  // O caractere 'h' minúsculo
+
+    int convertido = toupper(caractere);
+
+    printf("Caractere convertido para maiúsculas: %c\n", convertido);
+
+    return 0;
+}
+
 int main(void)
 {
-    // fibonacci();
-    // fatorial();
-    // geraFatorial();
-    // enesimoPG();
-    // primo();
-    // hora();
-    // goldbach();
-    // qtdAlgarismos();
-    // somaFatoriais();
-    // forSemIncremento();
-    // salarioHora();
-    // comissao();
-    // pertenceFibonacci();
-    // printf("%d\n", modulo());
-    // printf("%d\n", potencia());
-    // printf("%d\n", divisao());
-    // incremento();
-    // ponteiro();
-    // stringReversa();
-    // testeSizeof();
-    // testeStrings();
-    // printf("%d\n", sequenciaCatalan());
-    // numeroPerfeito();
-    // lerArquivo();
-    // funcaoFputs();
-    // funcaoFgets1();
-    // funcaoStrcat();
-    // funcaoStrncat();
-    // funcaoRewind();
-    // funcaoFerror();
-    // armazenaErro();
-    // funcaoFflush();
-    // funcaoFread();
-    // funcaoFwrite();
-    // funcaoFprintf();
-    // funcaoFscanf();
-    // funcaoPutchar();
-    // funcaoFreopen();
-    // funcaoOpen();
-    // funcaoFgets();
-    // funcaoRemove();
-    // funcaoFseek();
-    // funcaoFgetc();
+    //fibonacci();
+    //fatorial();
+    //geraFatorial();
+    //enesimoPG();
+    //primo();
+    //hora();
+    //goldbach();
+    //qtdAlgarismos();
+    //somaFatoriais();
+    //forSemIncremento();
+    //salarioHora();
+    //comissao();
+    //pertenceFibonacci();
+    //printf("%d\n", modulo());
+    //printf("%d\n", potencia());
+    //printf("%d\n", divisao());
+    //incremento();
+    //ponteiro();
+    //stringReversa();
+    //testeSizeof();
+    //testeStrings();
+    //printf("%d\n", sequenciaCatalan());
+    //numeroPerfeito();
+    //testandoStruct();
+    //lerArquivo();
+    //funcaoFputs();
+    //funcaoFgets1();
+    //funcaoStrcat();
+    //funcaoStrncat();
+    //funcaoRewind();
+    //funcaoFerror();
+    //armazenaErro();
+    //funcaoFflush();
+    //funcaoFread();
+    //funcaoFwrite();
+    //funcaoFprintf();
+    //funcaoFscanf();
+    //funcaoPutchar();
+    //funcaoFreopen();
+    //funcaoOpen();
+    //funcaoFgets();
+    //funcaoRemove();
+    //funcaoFseek();
+    //funcaoFgetc();
     //macro();
     //funcaoCleaerr();
     //funcaoClose();
@@ -1214,5 +1644,27 @@ int main(void)
     //funcaoRename();
     //funcaoSprintf();
     //funcaoSscanf();
-    funcaoUnlink();
+    //funcaoUnlink();
+    //funcaoIsalnum();
+    //funcaoIsalpha();
+    //funcaoIscntrl();
+    //funcaoIsgraph();
+    //funcaoIslower();
+    //funcaoIsprint();
+    //funcaoIspunct();
+    //funcaoIsspace();
+    //funcaoIsupper();
+    //funcaoIsxdigit();
+    //funcaoMemchr();
+    //funcaoMemcmp();
+    //funcaoMemcpy();
+    //funcaoMemmove();
+    //funcaoMemset();
+    //funcaoStrcoll();
+    //funcaoStrcpy();
+    //funcaoStrcspn();
+    //funcaoStrspn();
+    //funcaoStrtok();
+    //funcaoTolower();
+    funcaoToupper();
 }
