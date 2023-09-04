@@ -1,8 +1,9 @@
 #include <math.h>
 #include <stdio.h>
 
-int funcaoAcos(){
-    double x = 0.5;  // Cosseno de 60 graus (π/3 radianos)
+int	main(){
+
+     double x = 0.5;  // Cosseno de 60 graus (π/3 radianos)
     double y = 4.0;
     double numero = 5.7;
     double angulo = 1.0472;
@@ -58,15 +59,6 @@ int funcaoAcos(){
     printf("A tangente de %f radianos é aproximadamente %f\n", angulo, tangente);
     printf("A tangente hiperbólica de %f é aproximadamente %f\n", x, tangenteHiperbolica);
 
-
-
-
-
-    return 0;
-}
-
-int	main(){
-    funcaoAcos();
 
     return 0;
 }
