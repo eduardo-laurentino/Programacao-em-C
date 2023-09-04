@@ -13,8 +13,8 @@ int	main(){
 
 
 
-    double arcoCosseno = acosf(x);
-    double arcoSeno = asinf(x);
+    double arcoCosseno = acos(x);
+    double arcoSeno = asin(x);
     double arcoTangente = atan(x);
     double arcoaTan2 = atan2(y, x);
     double teto = ceil(numero);
