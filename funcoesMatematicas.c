@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int	main(){
 
@@ -10,6 +11,8 @@ int	main(){
     double numeroAbs = -5.7;
     double base = 2.0;
     double expoente = 3.0;
+    double numFabs = -12.34;
+    int numAbs = -10;
 
 
 
@@ -35,6 +38,9 @@ int	main(){
     double raiz_quadrada = sqrt(numero);
     double tangente = tan(angulo);
     double tangenteHiperbolica = tanh(x);
+    double fAbs_num = fabs(numFabs);
+    int abs_num = abs(numAbs);
+
 
 
 
@@ -58,6 +64,8 @@ int	main(){
     printf("A raiz quadrada de %f é %f\n", numero, raiz_quadrada);
     printf("A tangente de %f radianos é aproximadamente %f\n", angulo, tangente);
     printf("A tangente hiperbólica de %f é aproximadamente %f\n", x, tangenteHiperbolica);
+    printf("O valor absoluto de %.2lf é %.2lf\n", numFabs, fAbs_num);
+    printf("O valor absoluto de %d é %d\n", numAbs, abs_num);
 
 
     return 0;

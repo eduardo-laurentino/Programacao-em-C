@@ -6,6 +6,10 @@
 #include <ctype.h>
 #include <ncurses.h>
 #include <locale.h>
+#include <assert.h>
+#include <setjmp.h>
+#include <signal.h>
+#include <stdarg.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -1581,6 +1585,205 @@ int funcaoToupper(){
     return 0;
 }
 
+int funcaoAbort(){
+    int *ptr = NULL;
+    ptr = (int *)malloc(sizeof(int));
+
+    if (ptr == NULL) {
+        fprintf(stderr, "Falha na alocação de memória.\n");
+        abort(); // Encerra o programa imediatamente
+    }
+
+    // ... continuar o código ...
+
+    free(ptr); // Libera a memória alocada
+    return 0;
+}
+
+int funcaoAssert(){
+    int x = 1;
+    
+    // Verifica se x é igual a 10
+    assert(x == 10);
+
+    printf("O programa continuará se a asserção for verdadeira.\n");
+    
+    return 0;
+}
+
+void limparRecursos() {
+    printf("Limpando recursos antes de sair do programa.\n");
+}
+
+int funccaoAtexit(){
+    // Registra a função limparRecursos() para ser chamada na saída
+    atexit(limparRecursos);
+
+    printf("Programa em execução...\n");
+
+    // Simula a finalização do programa
+    // ...
+
+    return 0; // Quando o programa terminar, a função limparRecursos() será chamada automaticamente.
+}
+
+int funcaoAtof(){
+    //A função atof()aceita uma string como entrada e retorna o valor correspondente em ponto flutuante
+    const char *str = "3.14159";
+    double num = atof(str);
+
+    printf("O número convertido é: %.5lf\n", num);
+
+    return 0;
+}
+
+int funcaoAtoi(){
+    //A função atofi()aceita uma string como entrada e retorna o valor correspondente em inteiro
+     const char *str = "12345";
+    int num = atoi(str);
+
+    printf("O número convertido é: %d\n", num);
+
+    return 0;
+}
+
+// Função de comparação para inteiros
+int compar(const void *a, const void *b) {
+    int int_a = *((int*)a);
+    int int_b = *((int*)b);
+
+    if (int_a == int_b) return 0;
+    else if (int_a < int_b) return -1;
+    else return 1;
+}
+
+int funcaoBsearch(){
+    //Também funciona com string e char
+    int array[] = {2, 4, 6, 8, 10, 12, 14, 16};
+    int key = 10;
+
+    int *result = (int*)bsearch(&key, array, sizeof(array) / sizeof(array[0]), sizeof(int), compar);
+
+    if (result != NULL) {
+        printf("Elemento %d encontrado na posição %ld do array.\n", key, result - array);
+    } else {
+        printf("Elemento %d não encontrado no array.\n", key);
+    }
+
+    return 0;
+}
+
+int funcaoDiv(){
+    int numerador = 13;
+    int denominador = 4;
+
+    div_t result = div(numerador, denominador);
+
+    printf("Quociente: %d\n", result.quot);
+    printf("Resto: %d\n", result.rem);
+
+    return 0;
+}
+
+int funcaoExit(){
+    printf("Iniciando o programa...\n");
+
+    // Simulando uma situação de erro
+    if (1 > 2) {
+        printf("Erro: 1 é maior que 2!\n");
+        exit(1); // Termina o programa com código de status 1 (indicando erro)
+    }
+
+    printf("Continuando o programa...\n");
+
+    return 0;
+}
+
+// Função de comparação para inteiros (ordenar em ordem crescente)
+int comparCrescente(const void *a, const void *b) {
+    int int_a = *((int*)a);
+    int int_b = *((int*)b);
+
+    return int_a - int_b;
+}
+
+int funcaoQsort(){
+    int array[] = {9, 3, 7, 1, 5};
+    size_t num_elementos = sizeof(array) / sizeof(array[0]);
+
+    qsort(array, num_elementos, sizeof(int), comparCrescente);
+
+    printf("Array ordenado em ordem crescente:\n");
+    for (size_t i = 0; i < num_elementos; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+
+    
+
+return 0;
+}
+
+int funcaoRand(){
+    // Define a semente inicial com base no tempo atual
+    srand((unsigned int)time(NULL));
+
+    // Gera e imprime 5 números pseudoaleatórios
+    for (int i = 0; i < 5; i++) {
+        int numero = rand();
+        printf("Número pseudoaleatório %d: %d\n", i + 1, numero);
+    }
+
+    return 0;
+}
+
+// Função de tratamento para o sinal SIGINT
+void handleSIGINT(int signum) {
+    printf("Sinal SIGINT (Ctrl+C) recebido. Encerrando o programa...\n");
+    exit(0);
+}
+
+int funcaoSignal(){
+    // Associa a função de tratamento ao sinal SIGINT
+    signal(SIGINT, handleSIGINT);
+
+    printf("Pressione Ctrl+C para enviar o sinal SIGINT.\n");
+
+    while (1) {
+        // Loop infinito para manter o programa em execução
+    }
+
+    return 0;
+}
+
+int funcaoStrtod(){
+    const char *numeroTexto = "3.14159265";
+    char *endptr;
+    
+    double numero = strtod(numeroTexto, &endptr);
+
+    if (*endptr == '\0') {
+        printf("Número convertido: %lf\n", numero);
+    } else {
+        printf("Conversão falhou. Caractere inválido: '%c'\n", *endptr);
+    }
+
+    return 0;
+}
+
+int funcaoSystem(){
+    // Executa o comando "ls" no terminal (lista os arquivos no diretório atual)
+    int status = system("ls");
+
+    if (status == -1) {
+        printf("Erro ao executar o comando.\n");
+    } else {
+        printf("O comando terminou com status de saída: %d\n", status);
+    }
+
+    return 0;
+}
+
 int main(void)
 {
     //fibonacci();
@@ -1666,5 +1869,18 @@ int main(void)
     //funcaoStrspn();
     //funcaoStrtok();
     //funcaoTolower();
-    funcaoToupper();
+    //funcaoToupper();
+    //funcaoAbort();
+    //funcaoAssert();
+    //funccaoAtexit();
+    //funcaoAtof();
+    //funcaoAtoi();
+    //funcaoBsearch();
+    //funcaoDiv();
+    //funcaoExit();
+    //funcaoQsort();
+    //funcaoRand();
+    //funcaoSignal();
+    //funcaoStrtod();
+    funcaoSystem();
 }
